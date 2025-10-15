@@ -6,10 +6,11 @@ public class Principal
     {
         Lista lista = new Lista();
 
-        lista.insertaFrente(2);
-        lista.insertaFrente(3);
-        lista.insertaFrente(4);
-        lista.insertaFrente(8);
+        lista.insertaFinalR(2);
+        lista.insertaFinalR(3);
+        lista.insertaFinalR(4);
+        lista.insertaFinalR(8);
+        System.out.println("El numero total de Nodos es: " +lista.contarNodos());
         lista.mostrar();
     }   
 }
