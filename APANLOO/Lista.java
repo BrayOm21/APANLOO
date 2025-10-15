@@ -73,13 +73,12 @@ public class Lista
 
     public String toString()
     {
-        //System.out.println();
-    StringBuilder sb = new StringBuilder();
-    for (Nodo aux = inicio; aux != null; aux = aux.sig) 
-    {
-        sb.append("[ ").append(aux.info).append(" ]-->");
-    }
-    sb.append("null");
-    return sb.toString();
+        StringBuilder sb = new StringBuilder();
+        for (Nodo aux = inicio; aux != null; aux = aux.sig)
+        {
+            sb.append("[ ").append(aux.info).append(" ]-->");
+        }
+        sb.append("null");
+        return sb.toString();
     }
 }
