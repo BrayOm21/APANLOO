@@ -71,6 +71,7 @@ public class Lista
     {
         return contarNodosR(inicio,0);
     }
+
     public int contarElemNodo()
     {
         int N = 0;
@@ -93,9 +94,7 @@ public class Lista
     {
         return contarElemNodoR(inicio,0);
     }
-
-
-
+    
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
