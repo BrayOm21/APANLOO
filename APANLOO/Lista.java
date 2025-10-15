@@ -33,11 +33,8 @@ public class Lista
         else
         {
             Nodo aux;
-            for(aux = inicio; aux.sig!=null; aux=aux.sig);
-            if(aux.sig == null)
-            {
-                aux.sig=nuevo;
-            }
+            for(aux = inicio; aux.sig != null; aux=aux.sig);
+            aux.sig = nuevo;
         }
     }
 
@@ -63,12 +60,26 @@ public class Lista
         return N;
     }
 
-    public void mostrar()
+    public int contarElemNodo()
     {
-        for(Nodo aux=inicio; aux!=null; aux=aux.sig)
+        int N = 0;
+        Nodo aux;
+        for(aux = inicio; aux != null; aux=aux.sig)
         {
-            System.out.print("[ " + aux.info + " ] -- ");
+            N+=aux.info;
         }
-        System.out.println("null");
+        return N;
+    }
+
+    public String toString()
+    {
+        //System.out.println();
+    StringBuilder sb = new StringBuilder();
+    for (Nodo aux = inicio; aux != null; aux = aux.sig) 
+    {
+        sb.append("[ ").append(aux.info).append(" ]-->");
+    }
+    sb.append("null");
+    return sb.toString();
     }
 }
