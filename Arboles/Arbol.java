@@ -150,7 +150,4 @@ public class Arbol
     {
         return iguales(raiz, a.raiz);
     }
-    {
-
-    }
 }
