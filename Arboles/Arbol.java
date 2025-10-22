@@ -1,4 +1,5 @@
 package APANLOO.Arboles;
+import java.util.LinkedList;
 public class Arbol 
 {
     Nodo raiz;
@@ -150,4 +151,50 @@ public class Arbol
     {
         return iguales(raiz, a.raiz);
     }
+    private String imprimir(Nodo raiz)
+    {
+        if(raiz == null)
+        {
+            return "";
+        }
+        LinkedList<Nodo> l = new LinkedList<>();
+        l.add(raiz);
+        String sal = "";
+        while(!l.isEmpty())
+        {
+            int nivel = l.size();
+            String tem = "";
+            for(int i = 0; i<nivel; i++)
+            {
+   
+                Nodo aux = l.remove(0);
+                if(tem.length()==0)
+                {
+                    tem=""+aux.info;
+                }
+                else
+                {
+                    tem=tem+","+aux.info;
+                }
+                if(aux.hizq!=null)
+                {
+                    l.add(aux.hizq);
+                }
+                if(aux.hder!=null)
+                {
+                    l.add(aux.hder);
+                }
+            }
+            if(sal.length() == 0)
+            {
+                sal=tem;
+            }
+            else
+            {
+                sal = sal + "\n" + tem;
+            }
+        }
+        return sal;
+    }
+
 }
