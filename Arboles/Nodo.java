@@ -1,4 +1,4 @@
-package APANLOO.Arboles;
+package Arboles;
 public class Nodo 
 {
     int info;

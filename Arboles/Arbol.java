@@ -1,4 +1,4 @@
-package APANLOO.Arboles;
+package Arboles;
 import java.util.LinkedList;
 public class Arbol 
 {
