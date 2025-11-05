@@ -95,7 +95,6 @@ public class Arbol
 
     private int numNodos(Nodo sa)
     {
-        //subArbol vacio
         if (sa == null) 
         {
             return 0;
@@ -109,7 +108,6 @@ public class Arbol
 
     private int sumNodos(Nodo sa)
     {
-        //subArbol vacio
         if (sa == null) 
         {
             return 0;
@@ -202,6 +200,7 @@ public class Arbol
     {
         esHoja(raiz);
     }
+    
     private void noEsHoja(Nodo sa)
     {
         if(sa == null)
