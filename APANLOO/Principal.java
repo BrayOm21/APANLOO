@@ -12,6 +12,6 @@ public class Principal
         System.out.println(" ");
         System.out.println(lista);
         System.out.println("El numero total de Nodos de la ista es: " +lista.contarNodosR());
-        System.out.println("La suma de los elementos de la lista es: " +lista.contarElemNodo());
+        System.out.println("La suma de los elementos de la lista es: " +lista.contarElemNodoR());
     }   
 }
