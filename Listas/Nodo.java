@@ -1,4 +1,4 @@
-package APANLOO;
+package Listas;
 
 public class Nodo 
 {
