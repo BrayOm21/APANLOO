@@ -27,6 +27,8 @@ public class Main
         //System.out.println(a);
         //a.borraRaiz( );
         //  System.out.println(a);
-        System.out.println(a.esDegenerado());
+        //System.out.println(a.esDegenerado());
+        a.ponLigas();
+        a.mostrarLista();
     }   
 }

@@ -3,10 +3,12 @@ import java.util.LinkedList;
 public class Arbol 
 {
     Nodo raiz;
+    Nodo l;
     
     public Arbol()
     {
         raiz=null;
+        l=null;
     }
     public Arbol ejemplo1()
     {
@@ -119,6 +121,37 @@ public class Arbol
         return sumNodos(raiz);
     }
 
+    private int altura(Nodo sa)
+    {
+        if(sa==null)
+        {
+            return 0;
+        }
+        int izq = altura(sa.hizq);
+        int der = altura(sa.hder);
+        return Math.max(izq, der)+1;
+    }
+    public int altura()
+    {
+        return altura(raiz);
+    }
+
+    private Nodo clonar(Nodo sa)
+    {
+        if(sa == null)
+        {
+            return null;
+        }
+        Nodo nuevo = new Nodo(sa.info);
+        nuevo.hizq = clonar(sa.hizq);
+        nuevo.hder = clonar(sa.hder);
+        return nuevo;
+    }
+    public Nodo clonar()
+    {
+        return clonar(raiz);
+    }
+
     private int valMayNodos(Nodo sa)
     {
         //subArbol vacio
@@ -150,6 +183,63 @@ public class Arbol
     public boolean iguales(Arbol a)
     {
         return iguales(raiz, a.raiz);
+    }
+
+    private void esHoja(Nodo sa)
+    {
+        if(sa==null)
+        {
+            return;
+        }
+        if(sa.hizq==null && sa.hder==null)
+        {
+            System.out.println(sa.info);
+        }
+        esHoja(sa.hizq);
+        esHoja(sa.hder);
+    }
+    public void esHoja()
+    {
+        esHoja(raiz);
+    }
+    private void noEsHoja(Nodo sa)
+    {
+        if(sa == null)
+        {
+            return;
+        }
+        if(sa.hizq!=null || sa.hder!=null)
+        {
+            System.out.println(sa.info);
+        }
+        noEsHoja(sa.hizq);
+        noEsHoja(sa.hder);
+    }
+    public void noEsHoja()
+    {
+        noEsHoja(raiz);
+    }
+
+    private void nivel(Nodo sa, int n)
+    {
+        if(sa==null)
+        {
+            return;
+        }
+        if(n==1)
+        {
+            System.out.println(sa.info);
+        }
+        else if(n>1)
+        {
+            nivel(sa.hizq, n-1);
+            nivel(sa.hder, n-1);
+        }
+
+    }
+    public void nivel(int n)
+    {
+        nivel(raiz,n);
     }
 
     private String imprimir(Nodo raiz)
@@ -445,5 +535,44 @@ public class Arbol
             return false;
         }
         return esDegenerado(raiz);
+    }
+
+    private Nodo ponLigas(Nodo sa, Nodo ant)
+    {
+        if(sa == null)
+        {
+            return ant;
+        }
+        ant = ponLigas(sa.hizq, ant);
+        if(ant == null)
+        {
+            l=sa;
+        }
+        else
+        {
+            ant.sig = sa;
+            sa.prev = ant;
+            sa.sig = null;
+        }
+        ant = ponLigas(sa.hder, sa);
+        return ant;
+    }
+    public Nodo ponLigas()
+    {
+        return ponLigas(raiz, null);
+    }
+    public void mostrarLista() 
+    {
+        Nodo aux = l;
+        while (aux != null) 
+        {
+            System.out.print("[" + aux.info + "]");
+            if (aux.sig != null) 
+            {
+                System.out.print(" <-> ");
+            }
+            aux = aux.sig;
+        }
+        System.out.println();
     }
 }
