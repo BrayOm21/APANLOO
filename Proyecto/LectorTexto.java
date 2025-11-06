@@ -1,21 +1,26 @@
 package Proyecto;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.util.*;
 
 public class LectorTexto 
 {
-    static public void leeTexto(String arch) throws FileNotFoundException, IOException
+    public static List<String> leeTexto(String arch)
     {
-        //Abre el archivo como de lectura
-        RandomAccessFile f = new RandomAccessFile(arch, "r");
-        String l;
-        while ((l=f.readLine())!=null)
-        {
-            System.out.println(l);
+        List<String> lineas = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(arch)))
+        {        
+            String l;
+            while ((l=br.readLine())!=null)
+            {
+                lineas.add(l);
+            }
         }
-        f.close();
+        catch(IOException e)
+        {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+        return lineas;
     } 
     
 }
