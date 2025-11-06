@@ -8,7 +8,7 @@ public class LectorTexto
     public static List<String> leeTexto(String arch)
     {
         List<String> lineas = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(arch)))
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(arch), "UTF-8")))
         {        
             String l;
             while ((l=br.readLine())!=null)

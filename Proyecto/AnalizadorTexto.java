@@ -2,6 +2,7 @@ package Proyecto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class AnalizadorTexto 
@@ -21,13 +22,37 @@ public class AnalizadorTexto
             //Este segundo for es para recorrer el nuevo arreglo de String y saber la otra coordenada columna
             for(int columna=0; columna<palabras.length; columna++)
             {
-                //La palabra que tenemos en un indice de el arreglo la convertimos a mayuscula
-                String palabra= palabras[columna].toUpperCase();
+                            String palabra = palabras[columna]
+                    .toUpperCase()                          // opcional: todo mayúsculas
+                    .replaceAll("[^A-ZÁÉÍÓÚÑ]", "");        // elimina todo lo que no sea letra
+
+            // Si después de limpiar está vacía, la saltamos
+            if (palabra.isEmpty()) {
+                continue;
+            }
+
+                /*//La palabra que tenemos en un indice de el arreglo la convertimos a mayuscula
+                String palabra= palabras[columna].toUpperCase();*/
                 //Si no tenemos la palabra creamos un nuevo bodo de TreeMap y si existe pasamos a la siguiente linea
                 mapaPalabras.putIfAbsent(palabra, new ArrayList<>());
                 //Asignamos las coordenadas fila y columna
                 mapaPalabras.get(palabra).add(new int[]{fila+1,columna+1});
             }
+        }
+    }
+
+    public void mostrarDatos()
+    {
+        for(Map.Entry<String, ArrayList<int[]>> entrada: mapaPalabras.entrySet())
+        {
+            String palabra = entrada.getKey();
+            ArrayList<int[]> coordenada = entrada.getValue();
+            System.out.println("Palabra: " +palabra+ "| Repeticiones: " +coordenada.size()+ "| Coordenadas: " );
+            for(int[] cord: coordenada)
+            {
+                System.out.println("(" +cord[0]+ "," +cord[1]+ ")");
+            }
+            System.out.println();
         }
     }
        
