@@ -346,7 +346,6 @@ public class Arbol
         }
         return izq+1;
     }
-
     public boolean completoR()
     {
         if(completoR(raiz)>=0)
@@ -386,6 +385,7 @@ public class Arbol
     {
         return lleno(raiz);
     }
+
     private String arbolString(Nodo sa)
     {
         if(sa==null)
@@ -498,6 +498,7 @@ public class Arbol
     {
         raiz = buscayBorra(raiz, info);
     }
+
     private boolean esABB(Nodo sa, int min, int max)
     {
         if(sa == null)
@@ -560,6 +561,7 @@ public class Arbol
     {
         return ponLigas(raiz, null);
     }
+    
     public void mostrarLista() 
     {
         Nodo aux = l;
@@ -574,4 +576,84 @@ public class Arbol
         }
         System.out.println();
     }
+
+    private Nodo ponLigasGenracion(Nodo sa, Nodo ant, int nivel, int gen)
+    {
+        if(sa==null)
+        {
+            return ant;
+        }
+        if(nivel==gen)
+        {
+            if(ant==null)
+            {
+                l=sa;
+            }
+            else
+            {
+                ant.sig=sa;
+                sa.prev=ant;
+            }
+            ant=sa;
+        }
+        ant=ponLigasGenracion(sa.hizq, ant, nivel+1, gen);
+        ant=ponLigasGenracion(sa.hder, ant, nivel+1, gen);
+        return ant; 
+    }
+    public void ponLigasGenracion(int gen)
+    {
+        ponLigasGenracion(raiz, l, 1, gen);
+    }
+
+    private Nodo ponLigasHojas(Nodo sa, Nodo ant)
+    {
+        if(sa==null)
+        {
+            return ant;
+        }
+        ant=ponLigasHojas(sa.hizq,ant);
+        if(sa.hizq==null&&sa.hder==null)
+        {
+            if(ant==null)
+            {
+                l=sa;
+            }
+            else
+            {
+                ant.sig=sa;
+                sa.prev=ant;
+            }
+            ant=sa;
+        }
+        ant=ponLigasHojas(sa.hder,ant);
+        return ant;
+    }
+    public void ponLigasHojas()
+    {
+        ponLigasHojas(raiz,null);
+    }
+
+    private int sumaNodosHastaNivel(Nodo sa,int nivel, int lim)
+    {
+        if(sa==null)
+        {
+            return 0;
+        }
+        if(nivel>lim)
+        {
+            return 0;
+        }
+        int suma = sa.info;
+        suma+=sumaNodosHastaNivel(sa.hizq, nivel+1, lim);
+        suma+=sumaNodosHastaNivel(sa.hder, nivel+1, lim);
+        return suma;
+    }
+    public int sumaNodosHastaNivel(int nivel)
+    {
+        return sumaNodosHastaNivel(raiz,1,nivel);
+    }
+
+
+
+
 }

@@ -22,7 +22,7 @@ public class AnalizadorTexto
             //Este segundo for es para recorrer el nuevo arreglo de String y saber la otra coordenada columna
             for(int columna=0; columna<palabras.length; columna++)
             {
-                            String palabra = palabras[columna]
+                    String palabra = palabras[columna]
                     .toUpperCase()                          // opcional: todo mayúsculas
                     .replaceAll("[^A-ZÁÉÍÓÚÑ]", "");        // elimina todo lo que no sea letra
 
@@ -55,5 +55,4 @@ public class AnalizadorTexto
             System.out.println();
         }
     }
-       
 }
