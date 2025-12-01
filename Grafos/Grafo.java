@@ -6,9 +6,17 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
+import java.util.TreeSet;
+import java.util.Set;
+import java.util.List;
 
 public class Grafo 
 {
+    public Grafo()
+    {
+        adj=null;
+    }
     int [][] adj;
 
     boolean esunaLetra(char a)
@@ -134,5 +142,127 @@ public class Grafo
                 }
             }
         }
+    }
+
+    public void  recorridoProfundidad(int v)
+    {
+        int [] marcados = new int[adj.length];
+        Stack<Integer> pila = new Stack<>();
+        int w;
+        for(int i=0; i<marcados.length; i++)
+        {
+            marcados[i]=0;
+        }
+        marcados[v]=1;
+        pila.push(v);
+        while(!pila.isEmpty())
+        {
+            w=pila.pop();
+            System.out.println(w);
+            for(int i=0; i<adj[w].length; i++)
+            {
+                if(adj[w][i] != 0 && marcados[i]==0)
+                {
+                    pila.push(i);
+                    marcados[i]=1;
+                }
+            }
+        }
+    }
+
+    public Set<Integer> recorridoProfundidadSet(int v)
+    {
+        int [] marcados = new int [adj.length];
+        Set<Integer> aux= new TreeSet<>();
+        Stack<Integer> pila = new Stack<>();
+        int w;
+        for(int i = 0; i<marcados.length; i++)
+        {
+            marcados[i]=0;
+        }
+        marcados[v]=1;
+        pila.push(v);
+        while (!pila.isEmpty()) 
+        {
+            w=pila.pop();
+            aux.add(w);
+            for(int i =0; i<adj[w].length; i++)
+            {
+                if(adj[w][i] !=0 && marcados[i]==0)
+                {
+                    pila.push(i);
+                    marcados[i]=1;
+                }
+            }
+        }
+        return aux;
+    }
+
+    public List<Set<Integer>> componentesConexas()
+    {
+        List<Set<Integer>> componentes = new LinkedList<Set<Integer>>();
+        Set<Integer> marcados = new TreeSet<>();
+        for(int i=0; i<adj.length; i++)
+        {
+            if(!marcados.contains(i))
+            {
+                Set<Integer> unacomp = recorridoProfundidadSet(i);
+                unacomp.stream().forEach((k) -> {
+                    marcados.add(k);
+                });
+                componentes.add(unacomp);
+            }
+        }
+        return componentes;
+    }
+    
+    public List<Set<Integer>> componentesFuertementeConexas()
+    {
+        List<Set<Integer>> componentes = new LinkedList<Set<Integer>>();
+        Set<Integer> marcados = new TreeSet<>();
+        Grafo inversa = cloneInv();
+        Set<Integer> unaComp;
+        Set<Integer> unaCompInv;
+        Set<Integer> unaCompFte;
+        for(int i=0; i<adj.length; i++)
+        {
+            if(!marcados.contains(i))
+            {
+                unaComp=recorridoProfundidadSet(i);
+                unaCompInv=inversa.recorridoProfundidadSet(i);
+                unaCompFte=new TreeSet<>();
+                unaComp.retainAll(unaCompInv);
+                componentes.add(unaComp);
+                marcados.addAll(unaComp);
+            }
+        }
+        return componentes;
+    }
+
+    public void muestraComponentes(List<Set<Integer>> componentes)
+    {
+        for(Set<Integer> unaC : componentes)
+        {
+            for(int v:unaC)
+            {
+                System.out.print(v);
+                System.out.print(",");
+            }
+            System.out.println();
+        }
+    }
+
+    public Grafo cloneInv()
+    {
+        Grafo aux = new Grafo();
+        aux.adj = new int[this.adj.length][this.adj.length];
+        for(int i=0; i<this.adj.length;i++)
+        {
+            for(int j=0; j<this.adj[i].length;j++)
+            {
+                aux.adj[j][i]=this.adj[i][j];
+            }
+        }
+        return aux;
     }
 }
