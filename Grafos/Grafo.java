@@ -265,4 +265,67 @@ public class Grafo
         }
         return aux;
     }
+
+    private int [][] sumaMatriz(int [][] a, int [][] b)
+    {
+        int[][] aux= new int[this.adj.length][this.adj.length];
+        for(int i=0; i<this.adj.length;i++)
+        {
+            for(int j=0; j<this.adj.length; j++)
+            {
+                aux[i][j]=a[i][j]+b[i][j];
+                if(aux[i][j]>0)
+                {
+                    aux[i][j]=1;
+                }
+            }
+        }
+        return aux;    
+    }
+
+    private int [][] multiplicaMatricez(int [][]ent)
+    {
+        int [][] aux = new int[this.adj.length][this.adj.length];
+        for(int i=0; i<this.adj.length; i++)
+        {
+            for(int j=0; j<this.adj.length; j++)
+            {
+                for(int k=0; k<this.adj.length; k++)
+                {
+                    aux[i][j]=aux[i][j]+ent[i][j]*this.adj[k][j];
+                }
+                if(aux[i][j]>0)
+                {
+                    aux[i][j]=1;
+                }
+            }
+        }
+        return aux;
+    }
+
+    public Grafo cierreTransitivo()
+    {
+        int[][] suma=new int [this.adj.length][this.adj.length];
+        int[][] mul=new int [this.adj.length][this.adj.length];
+        for(int i=0; i<this.adj.length; i++)
+        {
+            System.arraycopy(this.adj[i], 0, suma[i],0 , this.adj.length);
+        }
+        int i;
+        for(i=0; i<this.adj.length; i++)
+        {
+            if(i==0)
+            {
+                mul=multiplicaMatricez(this.adj);
+            }
+            else
+            {
+                mul=multiplicaMatricez(mul);
+            }
+            suma=sumaMatriz(suma, mul);
+        }
+        Grafo g=new Grafo();
+        g.adj=suma;
+        return g;
+    }
 }
