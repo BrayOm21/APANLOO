@@ -328,4 +328,70 @@ public class Grafo
         g.adj=suma;
         return g;
     }
+
+    public Grafo algoritmoWarshall()
+    {
+        int [][] aux= new int[adj.length][adj.length];
+        for(int i=0; i<this.adj.length;i++)
+        {
+            System.arraycopy(this.adj[i],0,aux[i],0,this.adj.length);
+        }
+
+        for(int k=0; k<adj.length;k++)
+        {
+            for(int i=0; i<adj[k].length;i++)
+            {
+                for(int j=0; j<adj.length; j++)
+                {
+                    aux[i][j]=aux[i][j]!=0 || (aux[i][k]!=0 && aux[k][j] !=0)?1:0;
+                }
+            }
+        }
+        Grafo g = new Grafo();
+        g.adj = aux; 
+        return g;
+    }
+
+    private void caminoMasCortoR(CaminoCosto actual, int costo, List<Integer> p, int org, int dest)
+    {
+        if(org==dest)
+        {
+            if(actual.getCosto()>costo)
+            {
+                actual.setCosto(costo);
+                actual.setCamino(p);
+            }
+            return;
+        }
+        for(int i=0; i<adj[org].length;i++)
+        {
+            if(adj[org][i]==0)
+            {
+                continue;
+            }
+            if(p.contains(i))
+            {
+                continue;
+            }
+            p.add(i);
+            costo += adj[org][i];
+            if(costo >actual.getCosto())
+            {
+                costo -= adj[org][i];
+                p.remove(p.indexOf(i));
+                continue;
+            }
+            caminoMasCortoR(actual, costo, p, i, dest);
+            costo-=adj[org][i];
+            p.remove(p.indexOf(i));
+        }
+    }
+    public CaminoCosto caminoMasCortoR(int org, int dest)
+    {
+        CaminoCosto actual= new CaminoCosto();
+        List<Integer> p = new LinkedList<>();
+        p.add(org);
+        caminoMasCortoR(actual, 0, p, org, dest);
+        return actual;
+    }
 }
