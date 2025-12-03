@@ -394,4 +394,58 @@ public class Grafo
         caminoMasCortoR(actual, 0, p, org, dest);
         return actual;
     }
+    
+    public int [][] algoritmoDijkstra(int origen)
+    {
+        int [][] d= new int[adj.length][2];
+        boolean [] f = new boolean[adj.length];
+        for(int i=0; i<this.adj.length; i++)
+        {
+            if(i==origen)
+            {
+                f[i]=true;
+            }
+            else
+            {
+                f[i]=false;
+            }
+            if(this.adj[origen][i]!=0)
+            {
+                d[i][0]=this.adj[origen][i];
+            }
+            else
+            {
+                d[i][0]=Integer.MAX_VALUE-1000;
+            }
+            d[i][1]=origen;
+        }
+        int nodoMin;
+        int costoMin;
+        for(int i=0; i<this.adj.length;i++)
+        {
+            nodoMin=0;
+            costoMin=Integer.MAX_VALUE-1000;
+            for(int j=0; i<this.adj.length;j++)
+            {
+                if(f[j])
+                {
+                    continue;
+                }
+                if(costoMin>=d[j][0])
+                {
+                    costoMin=d[j][0];
+                    nodoMin=j;
+                }
+            }
+            f[nodoMin]=true;
+            for(int w=0;w<this.adj.length;w++)
+            {
+                if(f[w])
+                {
+                    continue;
+                }
+                if((d[nodoMin][0]+(this.adj[nodoMin][w]==0?Integer.MAX_VALUE-1000)))
+            }
+        }
+    }
 }
