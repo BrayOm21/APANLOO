@@ -425,7 +425,7 @@ public class Grafo
         {
             nodoMin=0;
             costoMin=Integer.MAX_VALUE-1000;
-            for(int j=0; i<this.adj.length;j++)
+            for(int j=0; j<this.adj.length;j++)
             {
                 if(f[j])
                 {
@@ -444,8 +444,85 @@ public class Grafo
                 {
                     continue;
                 }
-                if((d[nodoMin][0]+(this.adj[nodoMin][w]==0?Integer.MAX_VALUE-1000)))
+                int costoAux = (this.adj[nodoMin][w]==0?Integer.MAX_VALUE-1000:this.adj[nodoMin][w]);
+                if(d[nodoMin][0]+costoAux<d[w][0])
+                {
+                    d[w][0]=d[nodoMin][0]+this.adj[nodoMin][w];
+                    d[w][1]=nodoMin;
+                }
             }
         }
+        return d;
+    }
+    
+    public Grafo[] algoritmoFloyd()
+    {
+        int [][] aux= new int[this.adj.length][this.adj.length];
+        Grafo[] sal= new Grafo[2];
+        int [][] traza = new int [this.adj.length][this.adj.length];
+        for(int i=0; i<adj.length; i++)
+        {
+            for(int j=0; j<adj.length; j++)
+            {
+                aux[i][j]= this.adj[i][j]!=0?this.adj[i][j]:Integer.MAX_VALUE-1000;
+                if(i==j)
+                {
+                    aux[i][j]=0;
+                }
+                traza[i][j]=-1;
+            }
+        }
+        Grafo g = new Grafo();
+        g.adj=aux;
+        for(int k=0; k<adj.length; k++)
+        {
+            for(int i=0; i<adj.length; i++)
+            {
+                for(int j=0; j<adj.length; j++)
+                {
+                    int ant = aux[i][j];
+                    aux[i][j]= minimodeTres(aux[i][j], aux[i][k], aux[k][j]);
+                    if(ant!= aux[i][j])
+                    {
+                        traza[i][j]=k;
+                    }
+                }
+            }
+        }
+        sal[0] =g;
+        Grafo g2 = new Grafo();
+        g2.adj=traza;
+        sal[1]=g2;
+        return sal;
+    }
+
+    private int minimodeTres(int a,int b, int c)
+    {
+        if(b==Integer.MAX_VALUE-1000 || c==Integer.MAX_VALUE-1000)
+        {
+            b=Integer.MIN_VALUE-1000;
+        }
+        else
+        {
+            b=b+c;
+        }
+        if(a>b)
+        {
+            return b;
+        }
+        return a;
+    }
+
+    public void recuperaCamino(int vi, int vj)
+    {
+        int vk;
+        vk = adj[vi][vj];
+        if(vk==-1)
+        {
+            return;
+        }
+        recuperaCamino(vi, vk);
+        System.out.print(","+vk);
+        recuperaCamino(vk, vj);
     }
 }
